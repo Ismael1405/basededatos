@@ -1,4 +1,6 @@
 
+
+
 INSERT INTO Ciudad  (Nombre_ciudad)
 VALUES ("Glider"), ("Forgesand"), ("Hiltore"), ("Gazegreenelven"),("Greenbat"), ("Huntdwarf");
 
@@ -144,7 +146,7 @@ INSERT INTO Escuadron(Nombre_personaje_tanque, Nombre_personaje_mago, Nombre_per
 VALUES ("Ahkarg", "Raendan", "Stanto", 0), ("Bucksel", "Manddin", "Makwi", 2), ("Mashgor", "Xadel", "Carorhall", 4), ("Ahkarg", "Xadel", "Makwi", 0);
 
 INSERT INTO Mision_escuadron
-VALUES (1, 1), (2, 4), (3, 5);
+VALUES (1, 1), (2, 4), (3, 5),(4,6);
 
 INSERT INTO Participa_escuadron
 VALUES (1, 1), (2,2),(3,3);
