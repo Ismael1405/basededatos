@@ -180,28 +180,30 @@ from Personaje;
 
 #B
 DELIMITER //
-CREATE TRIGGER Bloqueo BEFORE UPDATE ON Mision_escuadron
+CREATE TRIGGER Bloqueo AFTER INSERT ON Participa_escuadron
 FOR EACH ROW
 BEGIN
 	DECLARE Min_Dragon INTEGER;
 	DECLARE Minimo INTEGER;
   
-    
     SELECT Num_dragon INTO Min_Dragon
-    FROM Mission_escuadron INNER JOIN Dragon ON Mission_escuadron.Num_dragon=Dragon.Num_dragon;
+    FROM mision_escuadron INNER JOIN Participa_escuadron ON mision_escuadron.Cod_mision=Participa_escuadron.Cod_mision
+    where Participa_escuadron.cod_mision=new.cod_mision;
     
-    SELECT MIN(Dragones_desbloq) INTO Minimo
-    FROM Personaje INNER JOIN Escuadron ON Personaje.Nombre_personaje=Escuadron.Nombre_personaje_tanque 
-    INNER JOIN Mission_escuadron ON Escuadron.Cod_escuadron=Mission_escuadron.Cod_escuadron;
+    SELECT min(dragones_desbloq) INTO Minimo
+    FROM Personaje INNER JOIN Escuadron ON Personaje.Nombre_personaje=Escuadron.Nombre_personaje_tanque OR Personaje.Nombre_personaje=Escuadron.Nombre_personaje_mago OR Personaje.Nombre_personaje=Escuadron.Nombre_personaje_guerrero
+    INNER JOIN Participa_escuadron ON Escuadron.Cod_escuadron=participa_escuadron.Cod_escuadron
+    INNER JOIN mision_escuadron ON mision_escuadron.Cod_mision=Participa_escuadron.cod_mision
+    where Participa_escuadron.cod_escuadron=new.cod_escuadron; 
     
-    IF Minimo<MinDragon Then
+    
+    IF Minimo<Min_Dragon Then
 		SIGNAL SQLSTATE '02000'
         SET MESSAGE_TEXT =' ERROR: Un Personaje no tiene el Dragon desbloqueado';
 	END IF;
     
 END//
-DELIMITER ;
-select *
-from Mision_escuadron;
- INSERT INTO Mision_escuadron
-VALUES (9,6);
+DELIMITER ; 
+
+insert into Participa_escuadron
+values (4,4);
